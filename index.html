@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Metadata -->
+    <title>Vesper Standard Time | Time Designed for Humans</title>
+    <meta name="description" content="Introducing Vesper Standard Time — a system designed around human rhythms, not clock flips. Clocks move a few seconds every night so we never have to change them again.">
+    <link rel="canonical" href="https://vesperstandardtime.com/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="What If Time Worked With Us?">
+    <meta property="og:url" content="https://vesperstandardtime.com/">
+    <meta property="og:description" content="What if clocks moved a few seconds every night so we never had to change them again?">
+    <meta property="og:image" content="https://vesperstandardtime.com/og/vesper-preview.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://vesperstandardtime.com/">
+    <meta name="twitter:title" content="Vesper Standard Time | Time Designed for Humans">
+    <meta name="twitter:description" content="What if clocks moved a few seconds every night so we never had to change them again?">
+    <meta name="twitter:image" content="https://vesperstandardtime.com/og/vesper-preview.png">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Base body styles */
+        body {
+            background: linear-gradient(to bottom, #020617, #1e1b4b, #4c1d95, #020617);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* Custom Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Background Glows */
+        .glow-bg {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            padding: 0.75rem 2rem;
+            background-color: white;
+            color: #020617;
+            font-weight: 600;
+            border-radius: 9999px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-weight: 600;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        /* Reveal Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive adjustments for the clock iframe */
+        .clock-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+
+        @media (max-width: 640px) {
+            .clock-container {
+                aspect-ratio: 4 / 3;
+                min-height: 320px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans text-white/90 antialiased selection:bg-violet-500/30">
+    <!-- Background Glows -->
+    <div class="glow-bg" style="top: -10%; left: -10%; opacity: 0.5;"></div>
+    <div class="glow-bg" style="top: 40%; right: -10%; opacity: 0.3;"></div>
+    <div class="glow-bg" style="bottom: -10%; left: 20%; opacity: 0.4;"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative pt-16 md:pt-24 pb-12 md:pb-16 px-6 overflow-hidden">
+            <div class="max-w-[720px] mx-auto text-center">
+                <div class="reveal">
+                    <h1 class="text-4xl md:text-7xl font-display font-bold tracking-tight mb-6 md:mb-8 bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent">
+                        What If Time Worked With Us?
+                    </h1>
+                    <h2 class="text-xl md:text-3xl font-display font-medium text-white/90 mb-8 md:mb-10 leading-[1.4]">
+                        Clocks could move a few seconds every night — so we never have to change them again.
+                    </h2>
+                    <p class="text-base md:text-xl text-white/50 mb-6 leading-relaxed">
+                        Introducing Vesper Standard Time — a system designed around human rhythms, not clock flips.
+                    </p>
+                    <p class="text-xs md:text-base font-medium text-violet-400/60 mb-10 md:mb-12 uppercase tracking-widest">
+                        Tiny daily time nudges. Big human benefits.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 md:mb-16">
+                        <button id="shareButton" class="w-full sm:w-auto btn-primary flex items-center justify-center gap-2 group">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:rotate-12 transition-transform"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" x2="12" y1="2" y2="15"/></svg>
+                            <span id="shareText">Share the Idea</span>
+                        </button>
+                        <a href="#updates" class="w-full sm:w-auto btn-secondary flex items-center justify-center gap-2">
+                            Get Updates
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Clock Embed Container -->
+                <div class="max-w-2xl mx-auto space-y-6">
+                    <div class="glass-card p-1 overflow-hidden group relative reveal" style="transition-delay: 0.2s;">
+                        <div class="clock-container rounded-xl overflow-hidden bg-slate-900/50">
+                            <iframe 
+                                src="https://vesper-standard-time-clock-136808390200.us-west1.run.app" 
+                                class="absolute top-0 left-0 w-full h-full border-0"
+                                title="Vesper Standard Time Clock"
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <!-- Adjustment Info Panel -->
+                    <div class="glass-card py-4 px-8 flex justify-between items-center max-w-md mx-auto reveal" style="transition-delay: 0.4s;">
+                        <div class="text-left">
+                            <div class="text-[10px] uppercase tracking-widest text-white/40 mb-1 font-semibold">Tonight’s Adjustment</div>
+                            <div class="text-xl font-mono font-bold text-emerald-400">+18 seconds</div>
+                        </div>
+                        <div class="h-8 w-px bg-white/10"></div>
+                        <div class="text-right">
+                            <div class="text-[10px] uppercase tracking-widest text-white/40 mb-1 font-semibold">Next sunset shift</div>
+                            <div class="text-xl font-mono font-bold text-violet-400">+22 seconds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Vesper Section -->
+        <section class="py-16 md:py-24 px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-3xl font-bold mb-4">Why “Vesper”?</h2>
+                    <p class="text-white/50 max-w-xl mx-auto">
+                        The name reflects what this system stabilizes: the evening boundary.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 text-center space-y-3 reveal" style="transition-delay: 0.1s;">
+                        <div class="text-violet-400 font-display italic text-xl">Vesper refers to the evening star — Venus.</div>
+                        <p class="text-sm text-white/60 leading-relaxed">
+                            The name reflects what this system stabilizes: the evening boundary.
+                        </p>
+                    </div>
+                    <div class="glass-card p-6 text-center space-y-3 reveal" style="transition-delay: 0.2s;">
+                        <div class="text-emerald-400 font-display italic text-xl">Stability, not more light.</div>
+                        <p class="text-sm text-white/60 leading-relaxed">
+                            VST isn't about creating extra daylight; it's about ensuring evenings get dark when they should, predictably.
+                        </p>
+                    </div>
+                    <div class="glass-card p-6 text-center space-y-3 reveal" style="transition-delay: 0.3s;">
+                        <div class="text-blue-400 font-display italic text-xl">Natural Rhythm.</div>
+                        <p class="text-sm text-white/60 leading-relaxed">
+                            By following the sun's gradual shift, mornings brighten and evenings dim at a pace your biology understands.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative py-12 text-center reveal">
+                    <div class="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div class="w-full border-t border-white/10"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span class="bg-[#1e1b4b] px-6 text-lg md:text-xl font-display italic text-violet-300">
+                            "This isn’t about adding more daylight. It’s about consistency."
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto reveal">
+                    <div class="flex items-center gap-3 text-base md:text-lg text-white/80">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400 shrink-0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>Evenings get dark when they should</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-base md:text-lg text-white/80">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400 shrink-0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>Mornings brighten gradually</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-base md:text-lg text-white/80">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400 shrink-0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>No 1-hour shocks</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-base md:text-lg text-white/80">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400 shrink-0"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span>No biannual disruption</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="py-24 px-6 bg-white/5">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-16 reveal">How It Works</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Today Card -->
+                    <div class="glass-card p-8 border-red-500/20 reveal">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 bg-red-500/10 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-400"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            </div>
+                            <h3 class="text-xl font-bold">Today: Big Jumps Twice a Year</h3>
+                        </div>
+                        <ul class="space-y-4 text-white/60">
+                            <li class="flex items-start gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 shrink-0 text-red-400"><polyline points="9 18 15 12 9 6"/></svg>
+                                <span>Sudden 60-minute shifts that disrupt sleep cycles.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 shrink-0 text-red-400"><polyline points="9 18 15 12 9 6"/></svg>
+                                <span>Increased risk of heart attacks and accidents post-shift.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 shrink-0 text-red-400"><polyline points="9 18 15 12 9 6"/></svg>
+                                <span>Artificial misalignment with the natural solar cycle.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- VST Card -->
+                    <div class="glass-card p-8 border-emerald-500/20 reveal" style="transition-delay: 0.2s;">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 bg-emerald-500/10 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            </div>
+                            <h3 class="text-xl font-bold">VST: A Few Seconds Each Night</h3>
+                        </div>
+                        <ul class="space-y-4 text-white/60">
+                            <li class="flex items-start gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 shrink-0 text-emerald-400"><polyline points="9 18 15 12 9 6"/></svg>
+                                <span>Imperceptible daily adjustments (avg. 20 seconds).</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 shrink-0 text-emerald-400"><polyline points="9 18 15 12 9 6"/></svg>
+                                <span>Maintains a consistent relationship with sunrise.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mt-1 shrink-0 text-emerald-400"><polyline points="9 18 15 12 9 6"/></svg>
+                                <span>Zero biological shock or "jet lag" twice a year.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tagline Divider -->
+        <div class="py-24 text-center reveal">
+            <p class="text-2xl md:text-[34px] font-display italic text-violet-300/80 max-w-2xl mx-auto px-6 md:whitespace-nowrap">
+                "Your body loves routine. VST finally gives it one."
+            </p>
+        </div>
+
+        <!-- Benefits Grid -->
+        <section class="py-24 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-16 reveal">The Benefits</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="glass-card p-8 hover:bg-white/10 transition-colors reveal">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400 mb-4"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        <h3 class="text-xl font-bold mb-2">Better Morning Light</h3>
+                        <p class="text-white/60 leading-relaxed">Wake up with the sun year-round, reducing seasonal affective symptoms.</p>
+                    </div>
+                    <div class="glass-card p-8 hover:bg-white/10 transition-colors reveal" style="transition-delay: 0.1s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400 mb-4"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                        <h3 class="text-xl font-bold mb-2">Improved Sleep</h3>
+                        <p class="text-white/60 leading-relaxed">No more losing an hour of sleep. Your circadian rhythm stays locked in.</p>
+                    </div>
+                    <div class="glass-card p-8 hover:bg-white/10 transition-colors reveal" style="transition-delay: 0.2s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400 mb-4"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <h3 class="text-xl font-bold mb-2">Predictable Evenings</h3>
+                        <p class="text-white/60 leading-relaxed">Sunset transitions happen naturally, giving you more usable twilight.</p>
+                    </div>
+                    <div class="glass-card p-8 hover:bg-white/10 transition-colors reveal" style="transition-delay: 0.3s;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-violet-400 mb-4"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+                        <h3 class="text-xl font-bold mb-2">Safer Commutes</h3>
+                        <p class="text-white/60 leading-relaxed">Reduced accidents caused by sudden changes in visibility during rush hour.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Imagine a Year Section -->
+        <section class="py-24 px-6 bg-white/5">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Imagine a Year With Vesper Standard Time</h2>
+                    <div class="text-lg text-white/60 max-w-2xl mx-auto space-y-4">
+                        <p>Today, sunset swings dramatically across the year — from late afternoon in winter to late evening in summer.</p>
+                        <p>Vesper Standard Time gently adjusts clocks each night so sunset stays near the same time all year.</p>
+                        <p class="text-sm text-white/40 italic">The ~20-minute seasonal drift avoids larger nightly shifts, keeping daily changes imperceptible.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Left Column: Today -->
+                    <div class="glass-card p-8 md:p-12 flex flex-col items-center reveal">
+                        <h3 class="text-xl font-bold mb-16 text-red-400">Today's System</h3>
+                        <div class="relative h-64 w-full flex flex-col items-center">
+                            <div class="absolute inset-y-0 w-px bg-white/10"></div>
+                            
+                            <!-- Summer Sunset -->
+                            <div class="absolute top-0 flex items-center gap-4 -translate-y-1/2 reveal-left">
+                                <div class="text-right">
+                                    <div class="text-xs font-bold text-white/40 uppercase tracking-wider">Summer Sunset</div>
+                                    <div class="text-2xl font-mono font-bold">8:30 PM</div>
+                                </div>
+                                <div class="w-4 h-4 rounded-full bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.6)] z-10"></div>
+                            </div>
+
+                            <div class="absolute top-0 bottom-0 w-1 bg-red-500/20 rounded-full"></div>
+
+                            <!-- Winter Sunset -->
+                            <div class="absolute bottom-0 flex items-center gap-4 translate-y-1/2 reveal-right">
+                                <div class="w-4 h-4 rounded-full bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.6)] z-10"></div>
+                                <div class="text-left">
+                                    <div class="text-xs font-bold text-white/40 uppercase tracking-wider">Winter Sunset</div>
+                                    <div class="text-2xl font-mono font-bold">4:30 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-20 text-center">
+                            <p class="text-sm text-white/40 italic">4-hour seasonal swing</p>
+                            <p class="text-xs text-red-400/60 mt-2 font-medium">Extreme range of evening light</p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: VST -->
+                    <div class="glass-card p-8 md:p-12 flex flex-col items-center border-emerald-500/20 reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-xl font-bold mb-16 text-emerald-400">Vesper Standard Time</h3>
+                        <div class="relative h-64 w-full flex flex-col items-center justify-center">
+                            <div class="absolute inset-y-0 w-px bg-white/10"></div>
+                            <div class="h-16 w-1 bg-emerald-500/30 rounded-full"></div>
+
+                            <!-- Summer Sunset -->
+                            <div class="absolute top-[calc(50%-32px)] flex items-center gap-4 -translate-y-1/2 reveal-left">
+                                <div class="text-right">
+                                    <div class="text-xs font-bold text-white/40 uppercase tracking-wider">Summer Sunset</div>
+                                    <div class="text-2xl font-mono font-bold text-emerald-400">7:10 PM</div>
+                                </div>
+                                <div class="w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.6)] z-10"></div>
+                            </div>
+
+                            <!-- Winter Sunset -->
+                            <div class="absolute top-[calc(50%+32px)] flex items-center gap-4 -translate-y-1/2 reveal-right">
+                                <div class="w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.6)] z-10"></div>
+                                <div class="text-left">
+                                    <div class="text-xs font-bold text-white/40 uppercase tracking-wider">Winter Sunset</div>
+                                    <div class="text-2xl font-mono font-bold text-emerald-400">6:50 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-20 text-center">
+                            <p class="text-sm text-white/40 italic">20-minute seasonal drift</p>
+                            <p class="text-xs text-emerald-400/60 mt-2 font-medium">Consistent evening light year-round</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 text-center max-w-xl mx-auto reveal">
+                    <p class="text-sm font-bold text-white/60 mb-2">Why allow a small seasonal drift?</p>
+                    <p class="text-sm text-white/40 leading-relaxed">
+                        Because the sun itself shifts by nearly two minutes each day across the year. <br />
+                        VST allows about a 20-minute seasonal drift so nightly adjustments stay tiny and imperceptible.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="py-24 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-16 reveal">Common Questions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-8 flex flex-col reveal">
+                        <h3 class="text-lg font-bold mb-4 text-violet-300">Will my phone update automatically?</h3>
+                        <p class="text-white/60 leading-relaxed text-sm">With a VST-enabled OS or app, your devices would handle the tiny daily shifts seamlessly while you sleep.</p>
+                    </div>
+                    <div class="glass-card p-8 flex flex-col reveal" style="transition-delay: 0.1s;">
+                        <h3 class="text-lg font-bold mb-4 text-violet-300">How do we coordinate meetings?</h3>
+                        <p class="text-white/60 leading-relaxed text-sm">Global VST standards would use a shared reference (like UTC) but with local drift offsets calculated by software.</p>
+                    </div>
+                    <div class="glass-card p-8 flex flex-col reveal" style="transition-delay: 0.2s;">
+                        <h3 class="text-lg font-bold mb-4 text-violet-300">Is this just Daylight Savings?</h3>
+                        <p class="text-white/60 leading-relaxed text-sm">No. DST is a binary switch. VST is a continuous, organic curve that follows the actual solar cycle.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Email Signup Section -->
+        <section id="updates" class="py-24 px-6 relative">
+            <div class="max-w-3xl mx-auto text-center">
+                <div class="glass-card p-12 relative overflow-hidden reveal">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-fuchsia-500"></div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto text-violet-400 mb-6"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <h2 class="text-3xl font-bold mb-4">Stay in the Loop</h2>
+                    <p class="text-white/60 mb-8 max-w-md mx-auto">
+                        We're building the future of time. Join our mailing list to get updates on the VST protocol and early access to our tools.
+                    </p>
+                    
+                    <form 
+                        name="vst-updates" 
+                        method="POST" 
+                        data-netlify="true"
+                        data-netlify-honeypot="bot-field"
+                        class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+                    >
+                        <p class="hidden">
+                            <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
+                        </p>
+                        <input type="hidden" name="form-name" value="vst-updates">
+                        <input 
+                            type="email" 
+                            name="email" 
+                            placeholder="Enter your email" 
+                            required
+                            class="flex-1 px-6 py-3 rounded-full bg-white/10 border border-white/20 focus:outline-none focus:border-violet-500 transition-colors text-white"
+                        >
+                        <button type="submit" class="btn-primary">
+                            Join Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/10 text-center text-white/40 text-sm">
+        <p>© <span id="year"></span> Vesper Standard Time. Designed for humans.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set current year in footer
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // Share Functionality
+            const shareButton = document.getElementById('shareButton');
+            const shareText = document.getElementById('shareText');
+
+            if (shareButton) {
+                shareButton.addEventListener('click', async () => {
+                    const shareData = {
+                        title: 'Vesper Standard Time',
+                        text: 'What if time worked with us? Discover Vesper Standard Time.',
+                        url: window.location.href,
+                    };
+
+                    try {
+                        if (navigator.share) {
+                            await navigator.share(shareData);
+                        } else {
+                            await navigator.clipboard.writeText(window.location.href);
+                            const originalText = shareText.textContent;
+                            shareText.textContent = 'Link Copied!';
+                            shareButton.classList.add('bg-emerald-500', 'text-white');
+                            shareButton.classList.remove('bg-white', 'text-slate-950');
+                            
+                            setTimeout(() => {
+                                shareText.textContent = originalText;
+                                shareButton.classList.remove('bg-emerald-500', 'text-white');
+                                shareButton.classList.add('bg-white', 'text-slate-950');
+                            }, 2000);
+                        }
+                    } catch (err) {
+                        console.error('Error sharing:', err);
+                    }
+                });
+            }
+
+            // Intersection Observer for Reveal Animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
